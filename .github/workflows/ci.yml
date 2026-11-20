@@ -1,0 +1,14 @@
+name: CI
+on: push
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t devops-hello .
+      - name: Run container
+        run: docker run -d -p 8080:80 devops-hello
+      - name: Test the site
+        run: sleep 3 && curl -s localhost:8080 | grep "Hello from DevOps"
+
